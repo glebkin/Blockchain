@@ -25,8 +25,27 @@ public class BlockchainApplication {
 
         try {
             String nodeUrl;
+            List<String> apiUrls = new ArrayList<>();
+            apiUrls.add("http://127.0.0.1:4045/api/tunnels");
+            apiUrls.add("http://127.0.0.1:4044/api/tunnels");
+            apiUrls.add("http://127.0.0.1:4043/api/tunnels");
+            apiUrls.add("http://127.0.0.1:4042/api/tunnels");
+            apiUrls.add("http://127.0.0.1:4041/api/tunnels");
+            apiUrls.add("http://127.0.0.1:4040/api/tunnels");
 
-            HttpResponse httpResponse = BlockchainUtils.sendRequest(NGROK_API_URL, false, null, null);
+            HttpResponse httpResponse = null;
+
+            while (httpResponse == null) {
+                for (String apiUrl : apiUrls) {
+                    httpResponse = BlockchainUtils.sendRequest(
+                            apiUrl, false, null, null);
+
+                    if (httpResponse != null) {
+                        break;
+                    }
+                }
+            }
+
             String jsonString = IOUtils.toString(httpResponse.getEntity().getContent(), StandardCharsets.UTF_8);
             JSONObject jsonObject = new JSONObject(jsonString);
 

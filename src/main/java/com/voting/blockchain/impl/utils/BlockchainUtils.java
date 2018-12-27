@@ -30,7 +30,7 @@ public class BlockchainUtils {
 
     private static final int TIMEOUT = 5 * 60000;
     public static final String NGROK_API_URL = "http://127.0.0.1:4041/api/tunnels";
-    public static final String MASTER_NODE_URL = "http://30866167.ngrok.io/resolve";
+    public static final String MASTER_NODE_URL = "https://blockchain-nodes-resolver.appspot.com/resolve";
 
     public static String nodeUrl;
     public static Set<String> nodesList = new HashSet<>();
@@ -81,9 +81,9 @@ public class BlockchainUtils {
             return httpResponse;
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
+            LOGGER.error("Url: {}", url);
+            return null;
         }
-
-        return null;
     }
 
 
